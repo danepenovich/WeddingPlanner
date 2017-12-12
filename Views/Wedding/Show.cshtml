@@ -1,0 +1,31 @@
+@model WeddingPlanner.Models.Wedding
+@using WeddingPlanner.Models
+
+<div class="row">
+    <div class="col-xs-6">
+        <h1>@Model.WedderOne and @Model.WedderTwo's Wedding</h1>
+        <h3>@Model.Date.ToString("D")</h3>
+        <h3>Guests:</h3>
+        <ul>
+            @foreach(RSVP rsvp in @Model.Guests)
+            {
+                    if(rsvp.Guest.FirstName == null)
+                    {
+                        <li>No guests have RSVP'd yet.</li>
+                    }
+                    else
+                    {
+                        <li>@rsvp.Guest.FirstName @rsvp.Guest.LastName</li>
+                    }
+            }
+        </ul>
+    </div>
+    <div style="margin-top:20px;" class="col-xs-6">
+            <div data="@Model.Address" id='map'></div>
+            <script src="~/js/initMap.js"></script>
+            <script async defer
+                type="text/javascript"
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5R2hAXhaunl4H1BpgpofIyyG-jmqRJHw&callback=initMap">
+            </script>
+    </div>
+</div>
