@@ -102,9 +102,16 @@ namespace WeddingPlanner.Controllers
             if(ActiveUser == null)
                 return RedirectToAction("Index", "Home");
             Wedding toDelete = _context.Weddings.SingleOrDefault(w => w.WeddingId == id);
-            _context.Weddings.Remove(toDelete);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (_context.Weddings.Where(w => w.WeddingId == id).SingleOrDefault().UserId == ActiveUser.UserId)
+            {
+                _context.Weddings.Remove(toDelete);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }
